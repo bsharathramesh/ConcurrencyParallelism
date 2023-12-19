@@ -112,6 +112,36 @@ public class CompletableFutureImplementation {
         return hw;
     }
 
+    public String helloworld_three_async_calls_log_async() {
+        stopWatchReset();
+        startTimer();
+
+        //Executors
+        ExecutorService executorService = Executors
+                .newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+        CompletableFuture<String> hello = CompletableFuture.supplyAsync(() -> hws.hello(), executorService);
+        CompletableFuture<String> world = CompletableFuture.supplyAsync(() -> hws.world(), executorService);
+        CompletableFuture<String> greeting = CompletableFuture.supplyAsync(() -> " Hi Completable Future!",
+                executorService);
+
+        String hw = hello
+                .thenCombineAsync(world, (h, w) -> {
+                    log("First Combine Operations !!");
+                    return h + w;
+                }, executorService)
+                .thenCombineAsync(greeting, (previous, current) -> {
+                    log("Second Combine Operations !!");
+                    return previous + current;
+                }, executorService)
+                .thenApplyAsync( s -> {
+                    log("Third operations toUpperCase !!");
+                    return s.toUpperCase();
+                }, executorService).join();
+        timeTaken();
+        return hw;
+    }
+
     public CompletableFuture<String> hello_world_thenCompose() {
         return CompletableFuture.supplyAsync(hws::hello)
                 .thenCompose((previous) -> hws.worldFuture(previous))

@@ -43,6 +43,12 @@ class CompletableFutureImplementationTest {
     }
 
     @Test
+    void testHelloworld_three_async_calls_log_async() {
+        String hw = cfi.helloworld_three_async_calls_log_async();
+        assertEquals("HELLO WORLD! HI COMPLETABLE FUTURE!", hw);
+    }
+
+    @Test
     void testHelloWorldThenCompose() {
 
         startTimer();
