@@ -31,6 +31,18 @@ class CompletableFutureImplementationTest {
     }
 
     @Test
+    void testHelloworld_three_async_calls_threadpool() {
+        String hw = cfi.helloworld_three_async_calls_threadpool();
+        assertEquals("HELLO WORLD! HI COMPLETABLE FUTURE!", hw);
+    }
+
+    @Test
+    void testHelloworld_three_async_calls_customthreadpool() {
+        String hw = cfi.helloworld_three_async_calls_custom_threadpool();
+        assertEquals("HELLO WORLD! HI COMPLETABLE FUTURE!", hw);
+    }
+
+    @Test
     void testHelloWorldThenCompose() {
 
         startTimer();
